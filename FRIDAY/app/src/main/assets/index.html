@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FRIDAY AI</title>
+<style>
+body {
+ margin:0; min-height:100vh; display:grid;
+ place-items:center; background:radial-gradient(circle,#123b62,#030711);
+ color:white; font-family:Arial; text-align:center;
+}
+main {width:90%; max-width:450px}
+.orb {
+ width:160px;height:160px;border-radius:50%;margin:30px auto;
+ background:radial-gradient(circle at 35% 30%,white,#35dfff 25%,#07518c 65%,#020817);
+ box-shadow:0 0 35px #18cfff,0 0 90px #087acb;
+ animation:pulse 3s infinite;
+}
+@keyframes pulse {50%{transform:scale(1.08)}}
+h1 {letter-spacing:9px;color:#67eaff}
+#reply {padding:18px;background:#10243b;border-radius:15px;margin:20px 0}
+input {width:90%;padding:14px;border-radius:10px;border:1px solid #35dfff;background:#071525;color:white}
+button {padding:12px 22px;margin:10px;background:#19c8ed;border:0;border-radius:10px}
+</style>
+</head>
+<body>
+<main>
+<div class="orb"></div>
+<h1>FRIDAY</h1>
+<p>YOUR PERSONAL AI ASSISTANT</p>
+<div id="reply">नमस्ते! मैं FRIDAY हूँ।</div>
+<input id="msg" placeholder="मुझसे कुछ पूछें">
+<button onclick="send()">SEND</button>
+<button onclick="listen()">🎤 बोलें</button>
+</main>
+<script>
+function send(){
+ let q=document.getElementById('msg').value.toLowerCase();
+ let a="मैं अभी Offline Demo मोड में हूँ।";
+ if(q.includes("hello")||q.includes("नमस्ते")) a="नमस्ते! मैं FRIDAY हूँ। आपकी क्या मदद करूँ?";
+ if(q.includes("नाम")||q.includes("name")) a="मेरा नाम FRIDAY है।";
+ document.getElementById('reply').innerText=a;
+}
+function listen(){
+ if(!('webkitSpeechRecognition' in window)){alert("Voice input उपलब्ध नहीं है");return;}
+ let r=new webkitSpeechRecognition();
+ r.lang='hi-IN';
+ r.onresult=e=>{document.getElementById('msg').value=e.results[0][0].transcript;send();};
+ r.start();
+}
+</script>
+</body>
+</html>
